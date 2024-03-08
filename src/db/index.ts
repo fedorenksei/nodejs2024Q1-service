@@ -1,5 +1,6 @@
 import { albumDb } from './entities/album';
 import { artistDb } from './entities/artist';
+import { favsDb } from './entities/favs';
 import { trackDb } from './entities/track';
 import { userDb } from './entities/user';
 
@@ -9,6 +10,7 @@ class Database {
     public artist: typeof artistDb,
     public album: typeof albumDb,
     public track: typeof trackDb,
+    public favs: typeof favsDb,
   ) {
     album.subscribeToDeletion((id: string) => {
       track.findAll().forEach((item) => {
@@ -26,4 +28,4 @@ class Database {
   }
 }
 
-export const db = new Database(userDb, artistDb, albumDb, trackDb);
+export const db = new Database(userDb, artistDb, albumDb, trackDb, favsDb);
