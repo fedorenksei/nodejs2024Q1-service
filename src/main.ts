@@ -6,6 +6,8 @@ import { join } from 'path';
 import { parse } from 'yaml';
 import { AppModule } from './app/app.module';
 
+const DEFAULT_PORT = 4000;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -15,6 +17,6 @@ async function bootstrap() {
   const document = parse(file);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT || DEFAULT_PORT);
 }
 bootstrap();
