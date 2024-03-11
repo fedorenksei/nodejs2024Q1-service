@@ -1,13 +1,11 @@
 import {
-  BadRequestException,
   ForbiddenException,
-  HttpException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { db } from 'src/db';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
-import { db } from 'src/db';
 
 @Injectable()
 export class UserService {
@@ -44,6 +42,6 @@ export class UserService {
   }
 
   remove(id: string) {
-    db.user.remove(id);
+    return db.user.remove(id);
   }
 }

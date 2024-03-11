@@ -48,6 +48,6 @@ export class UserController {
   @Delete(':id')
   @HttpCode(204)
   remove(@Param() { id }: ParamsWithId) {
-    return this.userService.remove(id);
+    if (!this.userService.remove(id)) throw new NotFoundException();
   }
 }
