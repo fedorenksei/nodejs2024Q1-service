@@ -18,29 +18,35 @@ class Favs {
   }
 
   addTrack(id: string) {
-    if (!trackDb.findOne(id)) return;
+    if (!trackDb.findOne(id)) return false;
     this.favTracks.add(id);
+    return true;
   }
   addArtist(id: string) {
-    if (!artistDb.findOne(id)) return;
+    if (!artistDb.findOne(id)) return false;
     this.favArtists.add(id);
+    return true;
   }
   addAlbum(id: string) {
-    if (!albumDb.findOne(id)) return;
+    if (!albumDb.findOne(id)) return false;
     this.favAlbums.add(id);
+    return true;
   }
 
   removeTrack(id: string) {
-    if (!trackDb.findOne(id)) return;
+    if (!trackDb.findOne(id)) return false;
     this.favTracks.delete(id);
+    return true;
   }
   removeArtist(id: string) {
-    if (!artistDb.findOne(id)) return;
+    if (!artistDb.findOne(id)) return false;
     this.favArtists.delete(id);
+    return true;
   }
   removeAlbum(id: string) {
-    if (!albumDb.findOne(id)) return;
+    if (!albumDb.findOne(id)) return false;
     this.favAlbums.delete(id);
+    return true;
   }
 }
 

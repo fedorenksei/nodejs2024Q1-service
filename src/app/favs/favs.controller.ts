@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { ParamsWithId } from '../util-classes';
 import { FavsService } from './favs.service';
 
@@ -13,30 +21,36 @@ export class FavsController {
 
   @Post('track/:id')
   addTrack(@Param() { id }: ParamsWithId) {
-    return this.favsService.addTrack(id);
+    const result = this.favsService.addTrack(id);
+    if (!result) throw new UnprocessableEntityException();
   }
   @Post('album/:id')
   addAlbum(@Param() { id }: ParamsWithId) {
-    return this.favsService.addAlbum(id);
+    const result = this.favsService.addAlbum(id);
+    if (!result) throw new UnprocessableEntityException();
   }
   @Post('artist/:id')
   addArtist(@Param() { id }: ParamsWithId) {
-    return this.favsService.addArtist(id);
+    const result = this.favsService.addArtist(id);
+    if (!result) throw new UnprocessableEntityException();
   }
 
   @Delete('track/:id')
   @HttpCode(204)
   removeTrack(@Param() { id }: ParamsWithId) {
-    return this.favsService.removeTrack(id);
+    const result = this.favsService.removeTrack(id);
+    if (!result) throw new UnprocessableEntityException();
   }
   @Delete('album/:id')
   @HttpCode(204)
   removeAlbum(@Param() { id }: ParamsWithId) {
-    return this.favsService.removeAlbum(id);
+    const result = this.favsService.removeAlbum(id);
+    if (!result) throw new UnprocessableEntityException();
   }
   @Delete('artist/:id')
   @HttpCode(204)
   removeArtist(@Param() { id }: ParamsWithId) {
-    return this.favsService.removeArtist(id);
+    const result = this.favsService.removeArtist(id);
+    if (!result) throw new UnprocessableEntityException();
   }
 }

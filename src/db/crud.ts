@@ -4,22 +4,12 @@ interface WithId {
   id: string;
 }
 
-type ItemInfo = {
-  version: number;
-  createdAt: number;
-  updatedAt: number;
-};
-
 export class Crud<Entity extends WithId> {
-  protected map: Map<string, Entity & ItemInfo> = new Map();
+  protected map: Map<string, Entity> = new Map();
 
   create(createDto: Omit<Entity, 'id'>) {
     const id = uuidv4();
-    const timestamp = Date.now();
-    const newItem = Object.assign(
-      { id, version: 1, createdAt: timestamp, updatedAt: timestamp },
-      createDto,
-    ) as Entity & ItemInfo;
+    const newItem = Object.assign({ id }, createDto) as Entity;
     this.map.set(id, newItem);
     return newItem;
   }
@@ -36,8 +26,6 @@ export class Crud<Entity extends WithId> {
     if (!this.map.has(id)) return;
     const item = this.map.get(id);
     Object.assign(item, updateDto);
-    item.updatedAt = Date.now();
-    item.version++;
     return item;
   }
 
