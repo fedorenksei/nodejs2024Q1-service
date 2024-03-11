@@ -1,4 +1,4 @@
-import { Crud } from './crud';
+import { Crud } from '../crud';
 
 export interface User {
   id: string;
@@ -11,7 +11,7 @@ interface UpdatePasswordDto {
   newPassword: string;
 }
 
-class UserCrud extends Crud<User> {
+export class UserCrud extends Crud<User> {
   updatePassword(id: string, { oldPassword, newPassword }: UpdatePasswordDto) {
     const user = this.map.get(id);
     if (!user) return 'not-found';

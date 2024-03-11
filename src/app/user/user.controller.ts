@@ -30,11 +30,11 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param() { id }: ParamsWithId) {
-    const user = this.userService.findOne(id);
-    if (!user) {
+    const item = this.userService.findOne(id);
+    if (!item) {
       throw new NotFoundException();
     }
-    return user;
+    return item;
   }
 
   @Put(':id')

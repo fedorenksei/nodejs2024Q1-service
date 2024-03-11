@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TrackService } from './track.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ParamsWithId } from '../util-classes';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
+import { TrackService } from './track.service';
 
 @Controller('track')
 export class TrackController {
@@ -18,17 +29,29 @@ export class TrackController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.trackService.findOne(+id);
+  findOne(@Param() { id }: ParamsWithId) {
+    const item = this.trackService.findOne(id);
+    if (!item) {
+      throw new NotFoundException();
+    }
+    return item;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
-    return this.trackService.update(+id, updateTrackDto);
+  @Put(':id')
+  update(
+    @Param() { id }: ParamsWithId,
+    @Body() updateTrackDto: UpdateTrackDto,
+  ) {
+    const item = this.trackService.update(id, updateTrackDto);
+    if (!item) {
+      throw new NotFoundException();
+    }
+    return item;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.trackService.remove(+id);
+  @HttpCode(204)
+  remove(@Param() { id }: ParamsWithId) {
+    if (!this.trackService.remove(id)) throw new NotFoundException();
   }
 }
