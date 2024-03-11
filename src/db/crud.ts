@@ -11,7 +11,7 @@ type ItemInfo = {
 };
 
 export class Crud<Entity extends WithId> {
-  private map: Map<string, Entity & ItemInfo> = new Map();
+  protected map: Map<string, Entity & ItemInfo> = new Map();
 
   create(createDto: Omit<Entity, 'id'>) {
     const id = uuidv4();
@@ -33,7 +33,7 @@ export class Crud<Entity extends WithId> {
   }
 
   update(id: string, updateDto: Partial<Entity>) {
-    if (!this.map.has(id)) throw new Error();
+    if (!this.map.has(id)) return;
     const item = this.map.get(id);
     Object.assign(item, updateDto);
     item.updatedAt = Date.now();

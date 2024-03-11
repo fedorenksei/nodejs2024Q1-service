@@ -1,20 +1,28 @@
-import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  HttpException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 import { db } from 'src/db';
 
 @Injectable()
 export class UserService {
   create(createUserDto: CreateUserDto) {
     const user = db.user.create(createUserDto);
-    delete user.password;
-    return user;
+    const userResource = { ...user };
+    delete userResource.password;
+    return userResource;
   }
 
   findAll() {
     return db.user.findAll().map((user) => {
-      delete user.password;
-      return user;
+      const userResource = { ...user };
+      delete userResource.password;
+      return userResource;
     });
   }
 
@@ -26,10 +34,13 @@ export class UserService {
     return userResource;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    const user = db.user.update(id, updateUserDto);
-    delete user.password;
-    return user;
+  updatePassword(id: string, updateUserPasswordDto: UpdateUserPasswordDto) {
+    const result = db.user.updatePassword(id, updateUserPasswordDto);
+    if (result === 'not-found') throw new NotFoundException();
+    if (result === 'wrong-password') throw new ForbiddenException();
+    const userResource = { ...result };
+    delete userResource.password;
+    return userResource;
   }
 
   remove(id: string) {

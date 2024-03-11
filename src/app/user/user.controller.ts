@@ -6,13 +6,13 @@ import {
   HttpCode,
   NotFoundException,
   Param,
-  Patch,
   Post,
+  Put,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserService } from './user.service';
 import { ParamsWithId } from '../util-classes';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
@@ -37,9 +37,12 @@ export class UserController {
     return user;
   }
 
-  @Patch(':id')
-  update(@Param() { id }: ParamsWithId, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  @Put(':id')
+  updatePassword(
+    @Param() { id }: ParamsWithId,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
+  ) {
+    return this.userService.updatePassword(id, updateUserPasswordDto);
   }
 
   @Delete(':id')
