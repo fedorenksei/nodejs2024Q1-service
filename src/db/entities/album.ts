@@ -7,4 +7,17 @@ export interface Album {
   artistId: string | null;
 }
 
-export const albumDb = new Crud<Album>();
+class AlbumCrud extends Crud<Album> {
+  deletionCb?: (id: string) => void;
+
+  remove(id: string): boolean {
+    this.deletionCb?.(id);
+    return super.remove(id);
+  }
+
+  subscribeToDeletion(cb: (id: string) => void) {
+    this.deletionCb = cb;
+  }
+}
+
+export const albumDb = new AlbumCrud();
