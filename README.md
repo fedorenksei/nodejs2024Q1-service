@@ -1,5 +1,7 @@
 # Home Library Service
 
+This is my student project on RSS Node.js course. Below are instructions on running project locally on your machine.
+
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
@@ -8,7 +10,7 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/fedorenksei/nodejs2024Q1-service.git
 ```
 
 ## Installing NPM modules
@@ -23,8 +25,13 @@ npm install
 npm start
 ```
 
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
+## Create `.env` file
+
+```
+cp .env-example .env
+```
+
+After starting the app on port (4000 as default) you can open OpenApi documentation in your browser OpenAPI documentation by typing http://localhost:4000/api/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
 ## Testing
